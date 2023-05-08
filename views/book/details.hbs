@@ -1,0 +1,35 @@
+<div>
+
+  <h3>Detalles de el Libro</h3>
+
+  <div>
+
+    {{!-- * Opcion 1: --}}
+
+    {{#with this.bookDetails}}
+
+    <h4>Titulo: {{title}}</h4>
+    <p>Descripción: {{description}}</p>
+    <p>Autor: {{author}}</p>
+
+    {{/with}}
+
+    {{!-- * Opcion 2: --}}
+
+    {{!-- {{#with this.bookDetails}}
+
+      <h4>Titulo: {{this.title}}</h4>
+      <p>Descripción: {{this.description}}</p>
+      <p>Autor: {{this.author}}</p>
+
+    {{/with}} --}}
+
+    {{!-- * Opcion 3: --}}
+
+    {{!-- <h4>Titulo: {{this.bookDetails.title}}</h4>
+    <p>Descripción: {{this.bookDetails.description}}</p>
+    <p>Autor: {{this.bookDetails.author}}</p> --}}
+
+  </div>
+
+</div>
