@@ -8,9 +8,9 @@
 
     {{#with this.bookDetails}}
 
-    <h4>Titulo: {{title}}</h4>
-    <p>Descripción: {{description}}</p>
-    <p>Autor: {{author}}</p>
+      <h4>Titulo: {{title}}</h4>
+      <p>Descripción: {{description}}</p>
+      <p>Autor: {{author}}</p>
 
     {{/with}}
 
@@ -29,6 +29,20 @@
     {{!-- <h4>Titulo: {{this.bookDetails.title}}</h4>
     <p>Descripción: {{this.bookDetails.description}}</p>
     <p>Autor: {{this.bookDetails.author}}</p> --}}
+
+    <a href="/book/{{this.bookDetails._id}}/edit">
+      <button>Ir a Actualizar</button>
+    </a>
+
+    <br>
+
+    {{!-- <a href="/book/{{this.bookDetails._id}}/delete">
+      <button>Borrar</button>
+    </a> --}}
+
+    <form action="/book/{{this.bookDetails._id}}/delete" method="post">
+      <button>Borrar</button>
+    </form>
 
   </div>
 
