@@ -9,6 +9,8 @@ const router = express.Router();
 const Book = require("../models/Book.model.js")
 const Author = require("../models/Author.model.js")
 
+const uploader = require("../middlewares/uploader.js")
+
 // ... todas nuestras de rutas de libros
 
 // GET "/book" => renderiza todos los titulos de los libros
@@ -75,10 +77,18 @@ router.get("/create", (req, res, next) => {
   })
 })
 
-// POST "/book/create-one-book" => recibir info de un libro y lo va a crear en la BD
-router.post("/create", (req, res, next) => {
+// POST "/book/create" => recibir info de un libro y lo va a crear en la BD
+router.post("/create",  uploader.single("coverImage") , (req, res, next) => {
 
   console.log("el body de la llamada", req.body)
+  console.log(req.file)
+
+  // ejemplo que algun caso en donde la imagen no se haya recibido
+  if (req.file === undefined) {
+    next("No hay imagen")
+    return // deten la ejecución de la ruta
+  }
+
 
   // antes de crear un libro, vamos a tener que cojer el archivo de image...
   // ... y lo vamos a enviar a cloudinary
@@ -87,7 +97,9 @@ router.post("/create", (req, res, next) => {
   Book.create({
     title: req.body.title,
     description: req.body.description,
-    author: req.body.author
+    author: req.body.author,
+    coverImage: req.file.path // aqui es donde cloudinary nos devuelve el URL de la imagen
+    // todo agregar el coverImage
   })
   .then(() => {
     console.log("Libro creado")

@@ -1,26 +1,26 @@
-<div>
+<div class="d-flex flex-column align-items-center">
 
   <h3>Formulario de Crear Libro</h3>
 
   {{!-- {{this.allAuthors}} --}}
 
-  <form action="/book/create" method="post">
+  <form action="/book/create" method="post" enctype="multipart/form-data">
 
-    <label for="title">Titulo</label>
-    <input type="text" name="title">
-
-    <br>
-
-    <label for="description">Descripción</label>
-    <input type="text" name="description">
+    <label for="title" class="form-label">Titulo</label>
+    <input type="text" name="title" class="form-control">
 
     <br>
 
-    <label for="author">Autor</label>
+    <label for="description" class="form-label">Descripción</label>
+    <input type="text" name="description" class="form-control">
+
+    <br>
+
+    <label for="author" class="form-label">Autor</label>
 
     {{!-- <input type="text" name="author"> --}}
 
-    <select name="author" multiple="true">
+    <select name="author" multiple="true" class="form-select">
 
       {{#each this.allAuthors}}
         <option value="{{this._id}}">{{this.name}}</option>
@@ -30,12 +30,12 @@
 
     <br>
 
-    <label for="coverImage">Imagen de cubierta</label>
-    <input type="file" name="coverImage">
+    <label for="coverImage" class="form-label">Imagen de cubierta</label>
+    <input type="file" name="coverImage" class="form-control">
 
     <br>
 
-    <button>Agregar</button>
+    <button class="btn btn-info">Agregar</button>
 
   </form>
 

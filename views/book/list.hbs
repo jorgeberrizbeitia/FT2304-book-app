@@ -1,13 +1,15 @@
-<div>
+<div class="d-flex flex-column align-items-center">
 
-  <h3>hola</h3>
+  <h3>Lista de Libros</h3>
 
-  {{#each this.allBooks}}
-    <li>
+  <div class="list-group">
+    {{#each this.allBooks}}
 
-      <a href="/book/{{this._id}}/details">{{this.title}}</a>
 
-    </li>
-  {{/each}}
+        <a class="list-group-item list-group-item-action list-group-item-warning" href="/book/{{this._id}}/details">{{this.title}}</a>
+
+
+    {{/each}}
+  </div>
 
 </div>
