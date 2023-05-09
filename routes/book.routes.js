@@ -7,6 +7,7 @@ const express = require('express');
 const router = express.Router();
 
 const Book = require("../models/Book.model.js")
+const Author = require("../models/Author.model.js")
 
 // ... todas nuestras de rutas de libros
 
@@ -31,10 +32,24 @@ router.get("/", (req, res, next) => {
 router.get("/:bookId/details", (req, res, next) => {
 
   // req.params para acceder al ID
-  console.log( "patata", req.params.bookId )
+  // console.log( "patata", req.params.bookId )
 
   Book.findById(req.params.bookId)
+  .populate("author") // Instruction: en este documento hay un id de una relación, buscar ese documento y dame toda la información
   .then((bookDetails) => {
+    console.log(bookDetails)
+
+    // populate hace todo el mismo efecto de abajo
+    // .populate(elNombreDeLaPropiedaded) // NO el nombre del modelo
+
+    // Author.findById(bookDetails.author)
+    // .then((authorDetails) => {
+    //   console.log(authorDetails)
+    //   res.render("book/details.hbs", {
+    //     bookDetails: bookDetails
+    //   })
+    // })
+
     res.render("book/details.hbs", {
       bookDetails: bookDetails
     })
@@ -48,13 +63,26 @@ router.get("/:bookId/details", (req, res, next) => {
 
 // GET "/book/create" => renderizar un formulario de creación de libro
 router.get("/create", (req, res, next) => {
-  res.render("book/create-form.hbs")
+  // al introducir relaciones, necesitamos un listado con todos los autores para que el usuario selecciones
+  Author.find()
+  .then((allAuthors) => {
+    res.render("book/create-form.hbs", {
+      allAuthors: allAuthors
+    })
+  })
+  .catch((err) => {
+    next(err)
+  })
 })
 
 // POST "/book/create-one-book" => recibir info de un libro y lo va a crear en la BD
 router.post("/create", (req, res, next) => {
 
   console.log("el body de la llamada", req.body)
+
+  // antes de crear un libro, vamos a tener que cojer el archivo de image...
+  // ... y lo vamos a enviar a cloudinary
+  // cloudinary nos devolverá un URL
 
   Book.create({
     title: req.body.title,

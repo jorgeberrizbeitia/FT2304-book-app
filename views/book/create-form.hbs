@@ -2,6 +2,8 @@
 
   <h3>Formulario de Crear Libro</h3>
 
+  {{!-- {{this.allAuthors}} --}}
+
   <form action="/book/create" method="post">
 
     <label for="title">Titulo</label>
@@ -15,7 +17,21 @@
     <br>
 
     <label for="author">Autor</label>
-    <input type="text" name="author">
+
+    {{!-- <input type="text" name="author"> --}}
+
+    <select name="author" multiple="true">
+
+      {{#each this.allAuthors}}
+        <option value="{{this._id}}">{{this.name}}</option>
+      {{/each}}
+
+    </select>
+
+    <br>
+
+    <label for="coverImage">Imagen de cubierta</label>
+    <input type="file" name="coverImage">
 
     <br>
 

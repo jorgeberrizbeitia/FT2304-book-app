@@ -10,7 +10,13 @@
 
       <h4>Titulo: {{title}}</h4>
       <p>Descripción: {{description}}</p>
-      <p>Autor: {{author}}</p>
+      {{!-- <p>Autor: {{author}}</p> --}}
+      {{!-- <p>Autor: {{author.name}} nacio en {{author.country}} en {{author.yearBorn}}</p> --}}
+
+      {{#each author}}
+        <p>Autor: {{this.name}} nacio en {{this.country}} en {{this.yearBorn}}</p>
+      {{/each}}
+
 
     {{/with}}
 
