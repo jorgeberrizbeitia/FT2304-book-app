@@ -116,21 +116,61 @@ router.post("/create",  uploader.single("coverImage") , (req, res, next) => {
 })
 
 // GET "/book/:bookId/edit" => renderizar un formulario de edit (con los valores actuales del libro)
-router.get("/:bookId/edit", (req, res, next) => {
+// router.get("/:bookId/edit", (req, res, next) => {
 
-  // buscamos los detalles del libro por su id
-  Book.findById(req.params.bookId)
-  .then((bookDetails) => {
+//   let bookDetails;
+//   // buscamos los detalles del libro por su id
+//   Book.findById(req.params.bookId)
+//   .then((response) => {
+//     // console.log(bookDetails)
+//     bookDetails = response;
+//     return Author.find()
+//   })
+//   .then((allAuthors) => {
+//     res.render("book/edit-form.hbs", {
+//       bookDetails: bookDetails,
+//       allAuthors: allAuthors
+//     })
+//   })
+//   .catch((err) => { 
+//     next(err)
+//   })
+//   // los pasamos a la vista
+// })
+
+router.get("/:bookId/edit", async (req, res, next) => {
+
+  try {
+    
+    const bookDetails = await Book.findById(req.params.bookId)
     console.log(bookDetails)
-    res.render("book/edit-form.hbs", {
-      bookDetails: bookDetails
-    })
-  })
-  .catch((err) => { 
-    next(err)
-  })
-  // los pasamos a la vista
+    
+    
+    const allAuthors = await Author.find()
 
+    // abajo la funcionalidad para poder ver los campos preseleccionados
+    const cloneAuthors = JSON.parse( JSON.stringify(allAuthors) )
+    // hay que clonar el array para poder modificar data que viene de mongo
+    
+    cloneAuthors.forEach((eachAuthor) => {
+      // pasamos por cada elemento del array que muestra las opciones y agregamos una nueva propiedad
+      // NO modificamos la BD, solo agregamos una propiedad temporal al array
+      if ( bookDetails.author.includes(eachAuthor._id) ) {
+        eachAuthor.isSelected = true
+      } else {
+        eachAuthor.isSelected = false
+      }
+    })
+    console.log(cloneAuthors)
+
+    res.render("book/edit-form.hbs", {
+      bookDetails: bookDetails,
+      allAuthors: cloneAuthors
+    })
+
+  } catch (error) {
+    next(error)
+  }
 })
 
 // POST "/book/:bookId/edit" => recibir la info a editar del libro y lo actualizará en la BD

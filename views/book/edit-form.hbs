@@ -18,8 +18,20 @@
 
     <br>
 
-    <label for="author">Autor</label>
-    <input type="text" name="author" value="{{this.bookDetails.author}}">
+    {{!-- <label for="author">Autor</label>
+    <input type="text" name="author" value="{{this.bookDetails.author}}"> --}}
+
+    <select name="author" multiple="true">
+
+      {{#each this.allAuthors}}
+        {{#if this.isSelected}}
+          <option selected value="{{this._id}}">{{this.name}}</option>
+        {{else}}
+          <option value="{{this._id}}">{{this.name}}</option>
+        {{/if}}
+      {{/each}}
+
+    </select>
 
     <br>
 
